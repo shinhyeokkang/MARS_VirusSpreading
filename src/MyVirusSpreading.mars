@@ -1,0 +1,66 @@
+model MyVirusSpreading
+
+use Mars
+
+grid-layer City as city
+
+agent Human on City {
+	observe var Infected = false;
+	observe var Immune = false;
+	var NearestHuman : Human;
+	var DistanceNearestHuman : real;
+	var NeighborsDistance : List<real>;
+	
+	initialize {}
+	
+	tick {
+		Move();
+		
+		if (Infected === false and Immune === false) {	// no point if human already infected or immune
+			NearestHuman = nearest Human;	// TODO: does it count itself?
+			NeighborsDistance = new List<real>();	// reset list
+			if (NearestHuman !== nil) {
+				DistanceNearestHuman = distance(NearestHuman);
+				if (DistanceNearestHuman <= 2) {	// if nearest human close enough to cause infection
+					NeighborsDistance.Add(DistanceNearestHuman);
+					// TODO: add other neighbors
+					each (var Distance in NeighborsDistance) {	// call GetInfected for each neighbor
+						GetInfected(Distance);
+					}
+				}
+			}
+		}
+	}
+	
+	def Move() {}
+	
+	def GetInfected(Distance : real) : bool {
+		var RandomValue = random(100);	// get a random value 0-99
+		
+		// different infection rates based on Distance
+		if (Distance <= 0.5) {
+			return CalcInfected(RandomValue, 80); // for example, 80% to get infected if Distance <= 0.5
+		} 
+
+		if (Distance <= 1) {
+			return CalcInfected(RandomValue, 60);
+		} 
+		
+		if (Distance <= 1.5) {
+			return CalcInfected(RandomValue, 40);
+		} 
+
+		if (Distance <= 2) {
+			return CalcInfected(RandomValue, 20);
+		} 
+	}
+	
+	def CalcInfected(RandomValue : real, ComparedTo : real) : bool {
+			if (RandomValue < ComparedTo) {
+				Infected = true;
+				return true;
+			} else {
+				return false;
+			}		
+	}
+}
