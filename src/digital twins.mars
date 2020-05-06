@@ -1,0 +1,48 @@
+model corona
+use Mars
+
+grid-layer city as city
+
+agent Human on city{
+	observe var Infected : bool
+	observe var Immune : bool
+	observe var Energy : integer
+	external observe var obedient : bool
+	observe var Ticks: integer //count for recover
+	
+	initialize{
+		Infected = false
+		Immune = false
+		
+	}
+	
+	def recover(){ //antibodies
+		if (Infected){
+			Infected = false //set not infected
+			Immune = true    //set immune
+		}		
+		
+	}
+	
+	def loss(){
+		Ticks++ 
+		if(not Immune){
+			if(Energy <= 0 ){
+				kill me   //die when energy <= 0
+			}else{
+				Energy--//loss energy
+			}
+			if(Ticks/24 >= 15 and Energy >0){ 
+				recover()
+			}
+		}		
+		//if immune then do nothing
+	}
+	
+	tick{
+		loss()
+		
+	}
+}
+
+
