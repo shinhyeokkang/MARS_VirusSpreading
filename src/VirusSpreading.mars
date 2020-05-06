@@ -35,12 +35,12 @@ agent Human on City{
 		Move();
 		
 		if (Infected === false and Immune === false) {	// no point if human already infected or immune
-			NearestHuman = nearest Human;	// TODO: does it count itself?
-			NeighborsDistance = new List<real>();	// reset list
-			if (NearestHuman !== nil) {
-				DistanceNearestHuman = distance(NearestHuman);
-				if (DistanceNearestHuman <= 2) {	// if nearest human close enough to cause infection
-					NeighborsDistance.Add(DistanceNearestHuman);
+			var nearHuman = explore Human in 2;	// TODO: does it count itself? No
+			var NeighborsDistance = new List<real>();	// reset list
+			if (nearHuman[0] !== nil) {
+				var TargetDistance = distance(nearHuman[0]);
+				if (TargetDistance <= 2) {	// if nearest human close enough to cause infection
+					NeighborsDistance.Add(TargetDistance);
 					// TODO: add other neighbors
 					each (var Distance in NeighborsDistance) {	// call GetInfected for each neighbor
 						GetInfected(Distance);
@@ -50,12 +50,12 @@ agent Human on City{
 		}
 	}
 	def Move(){
-		nearestHuman = nearest Human
-		if(obedient == true&&TargetDistance <= 2&&nearestHuman != nil){
+	
+		if(obedient == true&&TargetDistance <= 2&&nearHuman[0] != nil){
 			Rule = "R3 - Social Distancing"
 			
-			nearx = nearestHuman.GetPositionX()//runaway from the human
-			neary = nearestHuman.GetPositionY()
+			nearx = nearHuman[0].GetPositionX()//runaway from the human
+			neary = nearHuman[0].GetPositionY()
 			
 			move me 1 to #(2*xcor-nearx,2*ycor-neary)	
 		}
@@ -65,15 +65,8 @@ agent Human on City{
 	}
 	
 
-	//It is executed either 1 step straight or diagonal(1.4243)
-	def RandomMove(){
-		move me 1 to #(random(grass.DimensionX), random(grass.DimensionY))
-	}
 	
-
-	def EnergyLoss(){
-		Energy = Energy - 1
-		if(Energy <= 0) kill me 
+	
 
 	} 
 	passive Killed() => kill me
