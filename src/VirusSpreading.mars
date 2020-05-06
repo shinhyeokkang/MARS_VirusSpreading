@@ -18,6 +18,7 @@ agent Human on City{
 	// 			 "Sheep_reproduce" = Percentage chance of offspring 
 	external observe var Human_gain_by_age : integer
 	external observe var obey_ratio : integer
+	external observe var government_announce_date : integer 
 	
 	//var Target : Grass
 	
@@ -26,7 +27,7 @@ agent Human on City{
 		pos at #(random(city.DimensionX), random(city.DimensionY))
 		
 		
-		Energy = random(2 * Human_gain_by_age)
+		Energy = random(Human_gain_by_age) + 10
 		
 	}
 	
@@ -58,34 +59,7 @@ agent Human on City{
 		}
 	}
 	
-	def Move(){
-		if(obedient == false){
-		move me random(3) to #(random(city.DimensionX), random(city.DimensionY))
-		}
-		else{ 
-		//Social Distance Move
-			var nearestHuman = nearest human
-			if(nearestHuman != nil){
-				TargetDistance = distance(nearestHuman)
-			
-				if(TargetDistance <= 2){
-				Rule = "R3 - Social Distancing"
-				nearx = nearestHuman.GetPositionX()//runaway from the human
-				neary = nearestHuman.GetPositionY()
-				x = Human.GetPositionX()//runaway from the human
-				y = Human.GetPositionY()
-				
-				move me 1 to #(2x-nearx,2y-neary)
-				}else{
-				Rule = "R4 - No people nearby"
-				move me 1 to #(random(city.DimensionX), random(city.DimensionY))
-				} 
-			}else{
-				move me 1 to #(random(city.DimensionX), random(city.DimensionY))
-			}
-			
-		}		
-	}
+
 
 	 def EatGrass(){
 		Energy = Energy + Sheep_gain_from_food
@@ -113,100 +87,8 @@ agent Human on City{
 	passive Killed() => kill me
 	
 	//Die "Mutter" gibt dem "Kind" Werte von sich mit
-	passive SecondInitialize(sheepEnergy : integer, sheepGain : integer, sheepReproduce : integer){
-		Energy = sheepEnergy / 2
-		Sheep_gain_from_food = sheepGain
-		Sheep_reproduce = sheepReproduce
-	}
+
 	passive GetPosiotionX() => return xcor
 	passive GetPosiotionY() => return ycor
 }
 
-//Wolves walk around by chance, if you find a sheep you eat it and get a certain number of lives
-//When you move you lose a certain amount of energy. When the energy is used up, the wolves die.
-agent Wolf on Grassland{
-	observe var Rule = ""
-	observe var Energy : integer
-	var Mother : Wolf
-	//Regulator: "Wolf_gain_from_food" = Energy grows when eating
-	// 			 "Wolf_reproduce" = Percentage chance of offspring
-	external var Wolf_gain_from_food : integer
-	external var Wolf_reproduce : integer
-	observe var Wolf_gain_temp : integer
-	observe var Wolf_rep_temp : integer 
-	
-	var Target : Sheep
-	var TargetDistance : real
-	initialize{
-		//Start is with Energy * 2 of the controller "Wolf_gain_from_food"
-		//You start somewhere on the grid
-		pos at #(random(grass.DimensionX), random(grass.DimensionY))	
-		Wolf_gain_temp = Wolf_gain_from_food
-		Wolf_rep_temp = Wolf_reproduce
-		if(simtime === 0){
-			Energy = random(2 * Wolf_gain_from_food)
-		}else{
-			Mother = nearest Wolf
-			Energy = Mother.GetEnergyValue() / 2
-			Wolf_gain_temp = Mother.GetGainFromFood()
-			Wolf_rep_temp = Mother.GetRepRate()
-		}
-	}
-	tick{
-		EnergyLoss()
-		Spawn(Wolf_reproduce)
-		
-//		RandomMove()
-		Target = nearest Sheep
-		if(Target !== nil){
-			TargetDistance = distance(Target)
-			
-			if(TargetDistance < 1){
-				Rule = "R3 - Eat Sheep"
-				EatSheep(Target)
-			}else{
-				Rule = "R4 - No sheep on my point"
-				move me 2 to Target
-			}
-		}else{
-			Rule = "R5 - No more sheep exist"
-		}
-	}
-	def EnergyLoss(){
-		Energy = Energy - 1
-		if(Energy <= 0) kill me
-	} 
-
-	def RandomMove(){
-		move me 3 to #(random(grass.DimensionX), random(grass.DimensionY))
-	}
-
-	def EatSheep(sheep : Sheep){
-		Energy = Energy + Wolf_gain_temp
-		sheep.Killed()
-		Rule = "R6 - Sheep killed!"
-	}
-	
-	def Spawn(percent : integer){
-		if(random(100) < percent){
-			spawn Wolf at #(xcor, ycor)
-			Energy = Energy / 2
-		}
-	}
-	passive GetEnergyValue() => return Energy
-	passive GetGainFromFood() => return Wolf_gain_temp
-	passive GetRepRate() => return Wolf_rep_temp
-}
-
-agent GrassGrowthAgent on Grassland {
-	
-	external var Grass_regrowth_per_step : integer
-	
-	tick {
-		for (var x=0; x<grass.DimensionX; x++){
-			for (var y=0; y<grass.DimensionY; y++){
-				grass.SetIntegerValue(x,y, grass.GetIntegerValue(x,y)+Grass_regrowth_per_step)
-			}
-		}
-	}
-} 
