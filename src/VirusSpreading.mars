@@ -27,32 +27,37 @@ agent Human on City{
 		pos at #(random(city.DimensionX), random(city.DimensionY))
 		
 		
-		Energy = random(Human_gain_by_age) + 10
+		Energy = random(Human_gain_by_age) + 10// need to be consider 
 		
 	}
 	
-	
-	tick{
-		Move()
-		Infect() // I think infect() is easier to implement than getInfected()
-		Recover()// Only when enough time passed after infected 
-		 
-		if(Infected === true){
-			Rule = "Loose health"
-			EnergyLoss()
-		}else {
-			Rule = "R2 - I'm healthy"
-		}		
+		tick {
+		Move();
 		
+		if (Infected === false and Immune === false) {	// no point if human already infected or immune
+			NearestHuman = nearest Human;	// TODO: does it count itself?
+			NeighborsDistance = new List<real>();	// reset list
+			if (NearestHuman !== nil) {
+				DistanceNearestHuman = distance(NearestHuman);
+				if (DistanceNearestHuman <= 2) {	// if nearest human close enough to cause infection
+					NeighborsDistance.Add(DistanceNearestHuman);
+					// TODO: add other neighbors
+					each (var Distance in NeighborsDistance) {	// call GetInfected for each neighbor
+						GetInfected(Distance);
+					}
+				}
+			}
+		}
 	}
 	def Move(){
+		nearestHuman = nearest Human
 		if(obedient == true&&TargetDistance <= 2&&nearestHuman != nil){
 			Rule = "R3 - Social Distancing"
+			
 			nearx = nearestHuman.GetPositionX()//runaway from the human
 			neary = nearestHuman.GetPositionY()
-			x = Human.GetPositionX()//runaway from the human
-			y = Human.GetPositionY()
-			move me 1 to #(2x-nearx,2y-neary)	
+			
+			move me 1 to #(2*xcor-nearx,2*ycor-neary)	
 		}
 		else{
 			move me random(3) to #(random(city.DimensionX), random(city.DimensionY))
@@ -60,20 +65,6 @@ agent Human on City{
 	}
 	
 
-
-	 def EatGrass(){
-		Energy = Energy + Sheep_gain_from_food
-		var grass_available = grass.GetIntegerValue(xcor, ycor)
-		grass.SetIntegerValue(xcor, ycor, Math::Max(grass_available-3,0))
-	}
-	
-	def Spawn(percent : integer){
-		if(random(100) < percent){
-			var newSheep = spawn Sheep at #(xcor, ycor)
-			newSheep.SecondInitialize(Energy, Sheep_gain_from_food, Sheep_reproduce)
-			Energy = Energy / 2
-		}
-	}
 	//It is executed either 1 step straight or diagonal(1.4243)
 	def RandomMove(){
 		move me 1 to #(random(grass.DimensionX), random(grass.DimensionY))
@@ -88,7 +79,7 @@ agent Human on City{
 	
 	//Die "Mutter" gibt dem "Kind" Werte von sich mit
 
-	passive GetPosiotionX() => return xcor
-	passive GetPosiotionY() => return ycor
+	passive GetPositionX() => return xcor
+	passive GetPositionY() => return ycor
 }
 
