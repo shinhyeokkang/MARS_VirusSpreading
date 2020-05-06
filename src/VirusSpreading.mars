@@ -73,7 +73,8 @@ agent Human on City{
 
 	def EnergyLoss(){
 		Energy = Energy - 1
-		if(Energy <= 0) kill me
+		if(Energy <= 0) kill me 
+
 	} 
 	passive Killed() => kill me
 	
