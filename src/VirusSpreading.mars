@@ -25,7 +25,7 @@ agent Human on City{
 	initialize{
 		//Spawn somewhere in the grid when the simulation starts
 		pos at #(random(city.DimensionX), random(city.DimensionY))
-		
+		var nearHuman = explore Human in 2;
 		
 		Energy = random(Human_gain_by_age) + 10// need to be consider 
 		
@@ -39,6 +39,9 @@ agent Human on City{
 			var NeighborsDistance = new List<real>();	// reset list
 			if (nearHuman[0] !== nil) {
 				var TargetDistance = distance(nearHuman[0]);
+				var TargetDistance2 = distance(nearHuman[1]);
+				var TargetDistance3 = distance(nearHuman[2]);
+				var TargetDistance4 = distance(nearHuman[3]);
 				if (TargetDistance <= 2) {	// if nearest human close enough to cause infection
 					NeighborsDistance.Add(TargetDistance);
 					// TODO: add other neighbors
@@ -56,11 +59,24 @@ agent Human on City{
 			
 			nearx = nearHuman[0].GetPositionX()//runaway from the human
 			neary = nearHuman[0].GetPositionY()
-			
-			move me 1 to #(2*xcor-nearx,2*ycor-neary)	
+			if(TargetDistance2>2){
+				move me 1 to #(2*xcor-nearx,2*ycor-neary)	
+				}
+		 	else if (TargetDistance3>2){
+				  nearx2 = nearHuman[1].GetPositionX()//runaway from the human
+				  neary2 = nearHuman[1].GetPositionY()
+				  var avoidx = (nearx+nearx2)/2 // get middle point of two near human
+				  var avoidy = (neary+neary2)/2
+				  
+				  move me 1 to #(2*xcor-avoidx,2*ycor-avoidy)
+				  }
+				  
+			else {
+				move me 2 to #(random(city.DimensionX), random(city.DimensionY))
+			}
 		}
 		else{
-			move me random(3) to #(random(city.DimensionX), random(city.DimensionY))
+			move me random(100) to #(random(city.DimensionX), random(city.DimensionY))
 		}
 	}
 	
