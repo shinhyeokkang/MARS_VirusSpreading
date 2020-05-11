@@ -49,6 +49,7 @@ agent Human on City{
 				}
 			}
 		}
+		loss()
 	}
 	def Move(){
 	
@@ -116,6 +117,34 @@ agent Human on City{
 	passive GetPositionX() => return xcor
 	passive GetPositionY() => return ycor
 	
+	def recover(){ //antibodies
+		if (Infected){
+			Infected = false //set not infected
+			Immune = true    //set immune
+		}		
+		
+	}
+	
+	def loss(){		//TODO: add prob for recover() => affects the results
+		if(Infected){ //TODO: how about human get infected on the 3rd day?
+			Ticks++
+		}
+		
+		if(not Immune){
+			if(random(100)<15){ //15% death rate
+				kill me
+			}
+			if(Energy <= 0 ){
+				kill me   //die when energy <= 0
+			}else{
+				Energy--//loss energy
+			}
+			if(Ticks/24 >= 15 and Energy >0){ //1 Tick == 1 hour
+				recover()
+			}
+		}		
+		//if immune then do nothing
+	}
 
 }
 
