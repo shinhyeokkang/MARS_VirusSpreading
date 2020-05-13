@@ -9,47 +9,31 @@
 	},
 	"layers": [
 		{
-			"name":"myGrid",
-			"file":"grid.csv",
-			"dimensionx": 50,
-			"dimensiony": 50
+			"name":"city",
+			"file":"city.csv",
+			"dimensionx": 1000,
+			"dimensiony": 1000
 		}
 	],
 	"agents": [ {
-      "name":"Sheep",
-      "count":100,
+      "name":"Human",
+      "count":2363,
       "mapping": [
       	{
-      		"parameter" : "Sheep_gain_from_food",
-      		"value" : 4
+      		"parameter" : "Human_gain_by_age",
+      		"value" : 10
       	},
       	{
-      		"parameter" : "Sheep_reproduce",
-      		"value" : 4
-      	}
-      ]
-}, 
-{
-      "name":"Wolf",
-      "count":50,
-      "mapping": [
-      	{
-      		"parameter" : "Wolf_gain_from_food",
-      		"value" : 20
+      		"parameter" : "Vulnerable_class_ratio",
+      		"value" : 30
       	},
       	{
-      		"parameter" : "Wolf_reproduce",
-      		"value" : 5
-      	}
-      ]
-},
-{
-	  "name":"GrassGrowthAgent",
-	  "count":1,
-	  "mapping": [
+      		"parameter" : "Obey_ratio",
+      		"value" : 60
+      	},
       	{
-      		"parameter" : "Grass_regrowth_per_step",
-      		"value" : 1
+      		"parameter" : "Government_announce_date",
+      		"value" : 96
       	}
       ]
 }
