@@ -146,7 +146,7 @@ agent Human on City{
 		}
 		
 		if(not Immune){
-			if(random(100)<15){ //15% death rate
+			if(Energy - random(Energy)<=2){ //energy affects death rate
 				kill me
 			}
 			if(Energy <= 0 ){
