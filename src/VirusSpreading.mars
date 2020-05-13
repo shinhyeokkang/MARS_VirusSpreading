@@ -4,35 +4,30 @@ use Mars
 
 grid-layer City as city
 
-//Sheep walk around by chance, if you have grass under you, it is eaten
-//If there is no grass beneath you, nothing will be done
-//Every few rounds a new sheep is spawned
-//It receives half of the Energy 
+
 agent Human on City{
 	observe var Rule = ""
 	observe var Energy : integer //when energy goes to 0, human die.
 	observe var Infected : bool = false
 	observe var Immune : bool = false
 	observe var obedient : bool = false
-	//Regulator: "Sheep_gain_from_food" = Energy grows when eating
-	// 			 "Sheep_reproduce" = Percentage chance of offspring 
 	external observe var Human_gain_by_age : integer
 	external observe var Vulnerable_class_ratio : integer
 	external observe var Obey_ratio : integer
 	external observe var Government_announce_date : integer 
 	
+	var Obey = random(100); 
+	
+	
 	passive IsInfected() => return Infected
 	passive IsImmune() => return Immune
 	passive SetInfected(Bool : bool) => Infected = Bool
-	//var Target : Grass
 	
 	initialize{
 		//Spawn somewhere in the grid when the simulation starts
 		pos at #(random(city.DimensionX), random(city.DimensionY))
-		var nearHuman = explore Human in 2;
-		var Obey = Random(100);
-
-		var Class = Random(100);
+		
+		var Class = random(100);
 		if(Class < Vulnerable_class_ratio) {
 			Energy = random(Human_gain_by_age);
 		}
@@ -50,7 +45,8 @@ agent Human on City{
 			if (Neighbors[0] !== nil) {
 				each (var Neighbor in Neighbors) {		// for each Neighbor 
 					if (Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
-						Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
+						 
+						 Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
 					}
 					
 				}
@@ -67,16 +63,16 @@ agent Human on City{
 	}
 	
 	def Move(){
-	
+	    
 		if(obedient == true&&TargetDistance <= 2&&nearHuman[0] != nil){
 			Rule = "R3 - Social Distancing"
-			
+			nearHuman = explore Human in 2;
 			nearx = nearHuman[0].GetPositionX()//runaway from the human
 			neary = nearHuman[0].GetPositionY()
 			if(distance(nearHuman[1])>2){
 				move me 1 to #(2*xcor-nearx,2*ycor-neary)	
 				}
-		 	else (distance(nearHuman[2])>2){
+		 	if else(distance(nearHuman[2])>2){
 				  nearx2 = nearHuman[1].GetPositionX()//runaway from the human
 				  neary2 = nearHuman[1].GetPositionY()
 				  var avoidx = (nearx+nearx2)/2 // get middle point of two near human
@@ -127,8 +123,6 @@ agent Human on City{
 	 
 	passive Killed() => kill me
 	
-	//Die "Mutter" gibt dem "Kind" Werte von sich mit
-
 	passive GetPositionX() => return xcor
 	passive GetPositionY() => return ycor
 	
@@ -146,7 +140,7 @@ agent Human on City{
 		}
 		
 		if(not Immune){
-			if(Energy - random(Energy)<=2){ //energy affects death rate
+			if(random(100)<15){ //15% death rate
 				kill me
 			}
 			if(Energy <= 0 ){
@@ -160,6 +154,7 @@ agent Human on City{
 		}		
 		//if immune then do nothing
 	}
+
 
 }
 
