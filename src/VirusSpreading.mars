@@ -17,8 +17,9 @@ agent Human on City{
 	//Regulator: "Sheep_gain_from_food" = Energy grows when eating
 	// 			 "Sheep_reproduce" = Percentage chance of offspring 
 	external observe var Human_gain_by_age : integer
-	external observe var obey_ratio : integer
-	external observe var government_announce_date : integer 
+	external observe var Vulnerable_class_ratio : integer
+	external observe var Obey_ratio : integer
+	external observe var Government_announce_date : integer 
 	
 	passive IsInfected() => return Infected
 	passive IsImmune() => return Immune
@@ -29,12 +30,18 @@ agent Human on City{
 		//Spawn somewhere in the grid when the simulation starts
 		pos at #(random(city.DimensionX), random(city.DimensionY))
 		var nearHuman = explore Human in 2;
-		
-		Energy = random(Human_gain_by_age) + 10// need to be consider 
-		
+		var Obey = Random(100);
+
+		var Class = Random(100);
+		if(Class < Vulnerable_class_ratio) {
+			Energy = random(Human_gain_by_age);
+		}
+		else {
+			Energy = random(Human_gain_by_age) + 15;
+		}
 	}
 	
-		tick {
+	tick {
 		Move();
 		
 		if (Infected === true) {
@@ -49,8 +56,16 @@ agent Human on City{
 				}
 			}
 		}
-		loss()
+		
+		loss();
+		
+		if ( Ticks/24 >= Government_announce_date ) {
+			if(Obey < Obey_ratio) {
+				obedient = true;
+			}
+		}
 	}
+	
 	def Move(){
 	
 		if(obedient == true&&TargetDistance <= 2&&nearHuman[0] != nil){
