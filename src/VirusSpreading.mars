@@ -73,10 +73,10 @@ agent Human on City{
 			
 			nearx = nearHuman[0].GetPositionX()//runaway from the human
 			neary = nearHuman[0].GetPositionY()
-			if(TargetDistance2>2){
+			if(distance(nearHuman[1])>2){
 				move me 1 to #(2*xcor-nearx,2*ycor-neary)	
 				}
-		 	else if (TargetDistance3>2){
+		 	else (distance(nearHuman[2])>2){
 				  nearx2 = nearHuman[1].GetPositionX()//runaway from the human
 				  neary2 = nearHuman[1].GetPositionY()
 				  var avoidx = (nearx+nearx2)/2 // get middle point of two near human
