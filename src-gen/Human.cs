@@ -398,9 +398,9 @@ namespace VirusSpreading {
 							 <= 2) {
 											{
 											new System.Action(() => {
-												var _target181_4479 = this;
-												if (_target181_4479 != null) {
-													_City._KillHuman(_target181_4479, _target181_4479._executionFrequency);
+												var _target181_4480 = this;
+												if (_target181_4480 != null) {
+													_City._KillHuman(_target181_4480, _target181_4480._executionFrequency);
 												}
 											}).Invoke()
 											;}
@@ -408,9 +408,9 @@ namespace VirusSpreading {
 							if(Energy <= 0) {
 											{
 											new System.Action(() => {
-												var _target184_4520 = this;
-												if (_target184_4520 != null) {
-													_City._KillHuman(_target184_4520, _target184_4520._executionFrequency);
+												var _target184_4521 = this;
+												if (_target184_4521 != null) {
+													_City._KillHuman(_target184_4521, _target184_4521._executionFrequency);
 												}
 											}).Invoke()
 											;}
@@ -461,9 +461,9 @@ namespace VirusSpreading {
 		public void Killed() {
 			{
 			new System.Action(() => {
-				var _target196_4747 = this;
-				if (_target196_4747 != null) {
-					_City._KillHuman(_target196_4747, _target196_4747._executionFrequency);
+				var _target196_4748 = this;
+				if (_target196_4748 != null) {
+					_City._KillHuman(_target196_4748, _target196_4748._executionFrequency);
 				}
 			}).Invoke()
 					;
