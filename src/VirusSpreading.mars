@@ -137,7 +137,7 @@ agent Human on City{
 	
 	def Infect(Neighbor : Human, Distance : real) : bool {
 		var RandomValue = random(100);	// get a random value 0-99
-		
+		 
 		// different infection rates based on Distance
 		if (Distance <= 0.5) {
 			return CalcInfected(Neighbor, RandomValue, 80); // for example, 80% to get infected if Distance <= 0.5
