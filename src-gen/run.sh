@@ -1,2 +1,2 @@
 dotnet run -sm config.json
-Rscript ../analysis/mywsp.R
+Rscript ../analysis/covid19.R
