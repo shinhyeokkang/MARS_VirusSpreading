@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
+        "projectName": "VirusSpreading",
+        "projectPath": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
+        "packagesPath": "C:\\Users\\강신혁\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\강신혁\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Mars.Life.Simulations": {
+              "target": "Package",
+              "version": "[4.1.*, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

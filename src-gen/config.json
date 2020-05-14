@@ -18,7 +18,6 @@
 	"agents": [ {
       "name":"Human",
       "count":2363,
-      "file": "human.csv",
       "mapping": [
       	{
       		"parameter" : "Human_gain_by_age",

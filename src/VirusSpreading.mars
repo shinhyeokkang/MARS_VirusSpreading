@@ -25,8 +25,8 @@ agent Human on City{
 	
 	var Obey = random(100); 
 	
-	
-	passive IsInfected() => return Infected
+	 
+	passive IsInfected() => return Infected 
 	passive IsImmune() => return Immune
 	passive SetInfected(Bool : bool) => Infected = Bool
 	
