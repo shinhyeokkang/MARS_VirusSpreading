@@ -141,6 +141,7 @@ namespace VirusSpreading {
 			default(int), 
 			default(int), 
 			default(int), 
+			default(int), 
 			default(int)
 		, 	xcor, ycor, freq);
 			_HumanAgents.Add(id, agent);

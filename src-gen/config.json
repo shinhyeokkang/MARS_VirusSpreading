@@ -34,6 +34,10 @@
       	{
       		"parameter" : "Government_announce_date",
       		"value" : 96
+      	},
+      	{
+      		"parameter" : "Initial_infected_rate",
+      		"value" : 96
       	}
       ]
 }
