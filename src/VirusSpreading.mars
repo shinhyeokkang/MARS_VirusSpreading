@@ -80,11 +80,17 @@ agent Human on City{
 	def Move(){
 	    nearHuman = explore Human
 	    if(nearHuman[0] !== nil){
-		TargetDistance = distance nearHuman[0]}
-		 if(nearHuman[1] !== nil){
-		TargetDistance2 = distance nearHuman[1]}
-		 if(nearHuman[2] !== nil){
-		TargetDistance3 = distance nearHuman[2]}
+			TargetDistance = distance nearHuman[0]
+			return
+		}
+		if(nearHuman[1] !== nil){
+			TargetDistance2 = distance nearHuman[1]
+			return
+		}
+		if(nearHuman[2] !== nil){
+			TargetDistance3 = distance nearHuman[2]
+			return
+		}
 		
 		if(obedient === true and TargetDistance <= 2 ){
 			Rule = "R3 - Social Distancing"
@@ -170,7 +176,7 @@ agent Human on City{
 			Ticks++
 		}
 		
-		if(not Immune){
+		if(Infected){
 			if(Energy - random(Energy)<=2){ //15% death rate
 				kill me
 			}
