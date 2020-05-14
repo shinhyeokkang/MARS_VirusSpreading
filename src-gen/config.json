@@ -37,7 +37,7 @@
       	},
       	{
       		"parameter" : "Initial_infected_rate",
-      		"value" : 96
+      		"value" : 1
       	}
       ]
 }
