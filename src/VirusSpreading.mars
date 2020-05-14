@@ -55,11 +55,14 @@ agent Human on City{
 		Move();
 		
 		if (Infected === true) {
-			var Neighbors = explore Human in 2		// in radius
+			var Neighbors = explore Human 	
+			var NearestDistance = distance(Neighbors[0])
 		
-			if (Neighbors[0] !== nil) {
+			if (NearestDistance < 2) {
+				Neighbors = explore Human in 2
 				each (var Neighbor in Neighbors) {		// for each Neighbor 
-					if (Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
+					var NeighborDistance = distance(Neighbor)
+					if (NeighborDistance < 2 and Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
 						 
 						 Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
 					}
@@ -81,15 +84,15 @@ agent Human on City{
 	    nearHuman = explore Human
 	    if(nearHuman[0] !== nil){
 			TargetDistance = distance nearHuman[0]
-			return
+			
 		}
 		if(nearHuman[1] !== nil){
 			TargetDistance2 = distance nearHuman[1]
-			return
+			
 		}
 		if(nearHuman[2] !== nil){
 			TargetDistance3 = distance nearHuman[2]
-			return
+			
 		}
 		
 		if(obedient === true and TargetDistance <= 2 ){
