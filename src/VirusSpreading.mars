@@ -11,6 +11,13 @@ agent Human on City{
 	observe var Infected : bool = false
 	observe var Immune : bool = false
 	observe var obedient : bool = false
+	observe var Ticks: integer //count for recover
+	
+	var nearHuman : [Human]
+	var TargetDistance : real = 10
+	var TargetDistance2 : real = 10
+	var TargetDistance3 : real = 10
+	
 	external observe var Human_gain_by_age : integer
 	external observe var Vulnerable_class_ratio : integer
 	external observe var Obey_ratio : integer
@@ -37,6 +44,7 @@ agent Human on City{
 	}
 	
 	tick {
+		
 		Move();
 		
 		if (Infected === true) {
@@ -63,31 +71,52 @@ agent Human on City{
 	}
 	
 	def Move(){
-	    
-		if(obedient == true&&TargetDistance <= 2&&nearHuman[0] != nil){
+	    nearHuman = explore Human in 2;
+	    if(nearHuman[0] !== nil){
+		TargetDistance = distance nearHuman[0]}
+		 if(nearHuman[1] !== nil){
+		TargetDistance2 = distance nearHuman[1]}
+		 if(nearHuman[2] !== nil){
+		TargetDistance3 = distance nearHuman[2]}
+		
+		if(obedient === true and TargetDistance <= 2 ){
 			Rule = "R3 - Social Distancing"
-			nearHuman = explore Human in 2;
-			nearx = nearHuman[0].GetPositionX()//runaway from the human
-			neary = nearHuman[0].GetPositionY()
-			if(distance(nearHuman[1])>2){
+			//nearHuman = explore Human in 2;
+			var nearx = nearHuman[0].GetPositionX()//runaway from the human
+			var neary = nearHuman[0].GetPositionY()
+			if (TargetDistance2>2){
 				move me 1 to #(2*xcor-nearx,2*ycor-neary)	
 				}
-		 	if else(distance(nearHuman[2])>2){
-				  nearx2 = nearHuman[1].GetPositionX()//runaway from the human
-				  neary2 = nearHuman[1].GetPositionY()
-				  var avoidx = (nearx+nearx2)/2 // get middle point of two near human
-				  var avoidy = (neary+neary2)/2
+				else if (TargetDistance3>2){
+				  var nearx2 = nearHuman[1].GetPositionX()//runaway from the human
+				  var neary2 = nearHuman[1].GetPositionY()
 				  
-				  move me 1 to #(2*xcor-avoidx,2*ycor-avoidy)
+				  var avoidx = Plus(nearx,nearx2) // get middle point of two near human
+				  var avoidy = Plus(neary,neary2)
+				  
+				  var ax = Divide(avoidx);
+				  var ay = Divide(avoidy);
+				  
+				  move me 1 to #(2*xcor-ax,2*ycor-ay)
 				  }
 				  
-			else {
+			else{
 				move me 2 to #(random(city.DimensionX), random(city.DimensionY))
 			}
 		}
 		else{
 			move me random(100) to #(random(city.DimensionX), random(city.DimensionY))
 		}
+	}
+	
+	
+	def Divide(a : real) : real {
+		var x = a/2
+		return x;
+	}
+	def Plus(a : real, b : real) : real {
+		var x = a + b
+		return x;
 	}
 	
 	def Infect(Neighbor : Human, Distance : real) : bool {
@@ -120,12 +149,7 @@ agent Human on City{
 			}		
 	}
 	
-	 
-	passive Killed() => kill me
-	
-	passive GetPositionX() => return xcor
-	passive GetPositionY() => return ycor
-	
+
 	def recover(){ //antibodies
 		if (Infected){
 			Infected = false //set not infected
@@ -140,7 +164,7 @@ agent Human on City{
 		}
 		
 		if(not Immune){
-			if(random(100)<15){ //15% death rate
+			if(Energy - random(Energy)<=2){ //15% death rate
 				kill me
 			}
 			if(Energy <= 0 ){
@@ -154,6 +178,13 @@ agent Human on City{
 		}		
 		//if immune then do nothing
 	}
+	
+		 
+	passive Killed() => kill me
+	
+	passive GetPositionX() => return xcor
+	passive GetPositionY() => return ycor
+	
 
 
 }
