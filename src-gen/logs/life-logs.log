@@ -4,3 +4,9 @@
 [ERROR] 2020-05-14 17:58:51,945 | Mars.Core.SimulationStarter.SimulationStarter - ######################################################## 
 [ERROR] 2020-05-14 17:58:51,945 | Mars.Core.SimulationStarter.SimulationStarter - One or more errors occurred. (Index was outside the bounds of the array.) (Index was outside the bounds of the array.) 
 [ERROR] 2020-05-14 17:58:51,948 | Mars.Core.SimulationStarter.SimulationStarter - ######################################################## 
+[ERROR] 2020-05-14 18:59:04,164 | Mars.Core.SimulationStepExecutor.Implementation.StepExecutionUseCase - Index was outside the bounds of the array. 
+[ERROR] 2020-05-14 18:59:04,180 | Mars.Core.SimulationStarter.SimulationStarter - MARS simulation execution crashed by AggregateException 
+[ERROR] 2020-05-14 18:59:04,180 | Mars.Core.SimulationStarter.SimulationStarter - Exception message: 
+[ERROR] 2020-05-14 18:59:04,180 | Mars.Core.SimulationStarter.SimulationStarter - ######################################################## 
+[ERROR] 2020-05-14 18:59:04,180 | Mars.Core.SimulationStarter.SimulationStarter - One or more errors occurred. (Index was outside the bounds of the array.) 
+[ERROR] 2020-05-14 18:59:04,180 | Mars.Core.SimulationStarter.SimulationStarter - ######################################################## 

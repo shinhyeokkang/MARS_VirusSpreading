@@ -173,27 +173,27 @@ namespace VirusSpreading {
 			if(!Equals(nearHuman[0], null)) {
 							{
 							TargetDistance = new Func<double>(() => {
-							var _target83_1941 = nearHuman[0];
-							if (_target83_1941 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target83_1941.Position.PositionArray);
+							var _target83_1933 = nearHuman[0];
+							if (_target83_1933 == null) return 0.0;
+							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target83_1933.Position.PositionArray);
 							}).Invoke()
 							;}
 					;} ;
 			if(!Equals(nearHuman[1], null)) {
 							{
 							TargetDistance2 = new Func<double>(() => {
-							var _target85_2013 = nearHuman[1];
-							if (_target85_2013 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target85_2013.Position.PositionArray);
+							var _target85_2005 = nearHuman[1];
+							if (_target85_2005 == null) return 0.0;
+							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target85_2005.Position.PositionArray);
 							}).Invoke()
 							;}
 					;} ;
 			if(!Equals(nearHuman[2], null)) {
 							{
 							TargetDistance3 = new Func<double>(() => {
-							var _target87_2085 = nearHuman[2];
-							if (_target87_2085 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target87_2085.Position.PositionArray);
+							var _target87_2077 = nearHuman[2];
+							if (_target87_2077 == null) return 0.0;
+							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target87_2077.Position.PositionArray);
 							}).Invoke()
 							;}
 					;} ;
@@ -206,18 +206,18 @@ namespace VirusSpreading {
 											{
 											new System.Func<Tuple<double,double>>(() => {
 												
-												var _speed95_2374 = 1
+												var _speed95_2366 = 1
 											;
 												
-												var _entity95_2374 = this;
+												var _entity95_2366 = this;
 												
-												Func<double[], bool> _predicate95_2374 = null;
+												Func<double[], bool> _predicate95_2366 = null;
 												
-												var _target95_2374 = new System.Tuple<double,double>(2 * this.Position.X - nearx,2 * this.Position.Y - neary);
-												_City._HumanEnvironment.MoveTo(_entity95_2374,
-													 _target95_2374.Item1, _target95_2374.Item2, 
-													_speed95_2374, 
-													_predicate95_2374);
+												var _target95_2366 = new System.Tuple<double,double>(2 * this.Position.X - nearx,2 * this.Position.Y - neary);
+												_City._HumanEnvironment.MoveTo(_entity95_2366,
+													 _target95_2366.Item1, _target95_2366.Item2, 
+													_speed95_2366, 
+													_predicate95_2366);
 												
 												return new Tuple<double, double>(Position.X, Position.Y);
 											}).Invoke()
@@ -233,18 +233,18 @@ namespace VirusSpreading {
 															double ay = Divide(avoidy);
 															new System.Func<Tuple<double,double>>(() => {
 																
-																var _speed107_2777 = 1
+																var _speed107_2769 = 1
 															;
 																
-																var _entity107_2777 = this;
+																var _entity107_2769 = this;
 																
-																Func<double[], bool> _predicate107_2777 = null;
+																Func<double[], bool> _predicate107_2769 = null;
 																
-																var _target107_2777 = new System.Tuple<double,double>(2 * this.Position.X - ax,2 * this.Position.Y - ay);
-																_City._HumanEnvironment.MoveTo(_entity107_2777,
-																	 _target107_2777.Item1, _target107_2777.Item2, 
-																	_speed107_2777, 
-																	_predicate107_2777);
+																var _target107_2769 = new System.Tuple<double,double>(2 * this.Position.X - ax,2 * this.Position.Y - ay);
+																_City._HumanEnvironment.MoveTo(_entity107_2769,
+																	 _target107_2769.Item1, _target107_2769.Item2, 
+																	_speed107_2769, 
+																	_predicate107_2769);
 																
 																return new Tuple<double, double>(Position.X, Position.Y);
 															}).Invoke()
@@ -253,22 +253,22 @@ namespace VirusSpreading {
 															{
 															new System.Func<Tuple<double,double>>(() => {
 																
-																var _speed111_2841 = 2
+																var _speed111_2833 = 2
 															;
 																
-																var _entity111_2841 = this;
+																var _entity111_2833 = this;
 																
-																Func<double[], bool> _predicate111_2841 = null;
+																Func<double[], bool> _predicate111_2833 = null;
 																
-																var _target111_2841 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
+																var _target111_2833 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
 																),
 																_Random.Next(city.DimensionY()
 																)
 																);
-																_City._HumanEnvironment.MoveTo(_entity111_2841,
-																	 _target111_2841.Item1, _target111_2841.Item2, 
-																	_speed111_2841, 
-																	_predicate111_2841);
+																_City._HumanEnvironment.MoveTo(_entity111_2833,
+																	 _target111_2833.Item1, _target111_2833.Item2, 
+																	_speed111_2833, 
+																	_predicate111_2833);
 																
 																return new Tuple<double, double>(Position.X, Position.Y);
 															}).Invoke()
@@ -280,22 +280,22 @@ namespace VirusSpreading {
 							{
 							new System.Func<Tuple<double,double>>(() => {
 								
-								var _speed115_2926 = _Random.Next(100)
+								var _speed115_2918 = _Random.Next(100)
 							;
 								
-								var _entity115_2926 = this;
+								var _entity115_2918 = this;
 								
-								Func<double[], bool> _predicate115_2926 = null;
+								Func<double[], bool> _predicate115_2918 = null;
 								
-								var _target115_2926 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
+								var _target115_2918 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
 								),
 								_Random.Next(city.DimensionY()
 								)
 								);
-								_City._HumanEnvironment.MoveTo(_entity115_2926,
-									 _target115_2926.Item1, _target115_2926.Item2, 
-									_speed115_2926, 
-									_predicate115_2926);
+								_City._HumanEnvironment.MoveTo(_entity115_2918,
+									 _target115_2918.Item1, _target115_2918.Item2, 
+									_speed115_2918, 
+									_predicate115_2918);
 								
 								return new Tuple<double, double>(Position.X, Position.Y);
 							}).Invoke()
@@ -395,9 +395,9 @@ namespace VirusSpreading {
 							 <= 2) {
 											{
 											new System.Action(() => {
-												var _target175_4269 = this;
-												if (_target175_4269 != null) {
-													_City._KillHuman(_target175_4269, _target175_4269._executionFrequency);
+												var _target175_4261 = this;
+												if (_target175_4261 != null) {
+													_City._KillHuman(_target175_4261, _target175_4261._executionFrequency);
 												}
 											}).Invoke()
 											;}
@@ -405,9 +405,9 @@ namespace VirusSpreading {
 							if(Energy <= 0) {
 											{
 											new System.Action(() => {
-												var _target178_4307 = this;
-												if (_target178_4307 != null) {
-													_City._KillHuman(_target178_4307, _target178_4307._executionFrequency);
+												var _target178_4299 = this;
+												if (_target178_4299 != null) {
+													_City._KillHuman(_target178_4299, _target178_4299._executionFrequency);
 												}
 											}).Invoke()
 											;}
@@ -458,9 +458,9 @@ namespace VirusSpreading {
 		public void Killed() {
 			{
 			new System.Action(() => {
-				var _target190_4522 = this;
-				if (_target190_4522 != null) {
-					_City._KillHuman(_target190_4522, _target190_4522._executionFrequency);
+				var _target190_4514 = this;
+				if (_target190_4514 != null) {
+					_City._KillHuman(_target190_4514, _target190_4514._executionFrequency);
 				}
 			}).Invoke()
 					;
