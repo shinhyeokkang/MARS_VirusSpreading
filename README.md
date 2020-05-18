@@ -6,4 +6,5 @@ Simulation 1
 Simulation 2
 ![image info](analysis/covid19-2.jpg)
 
-
+No social distancing
+![image info](analysis/covid19-nosd.jpg)
