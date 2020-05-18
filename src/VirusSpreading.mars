@@ -175,24 +175,23 @@ agent Human on City{
 	}
 	
 	def loss(){		//TODO: add prob for recover() => affects the results
-		if(Infected){ //TODO: how about human get infected on the 3rd day?
-			Ticks++
-		}
-		
 		if(Infected){
-			if(Energy - random(Energy)<=2){ //15% death rate
-				kill me
-			}
-			if(Energy <= 0 ){
-				kill me   //die when energy <= 0
-			}else{
-				Energy--//loss energy
+			Ticks++
+			if(Ticks % 24 === 0){
+				if(Energy - random(Energy)<=2){ //15% death rate
+					kill me
+				}
+				if(Energy <= 0 ){
+					kill me   //die when energy <= 0
+				}else{
+					Energy--//loss energy
+				}
 			}
 			if(Ticks/24 >= 15 and Energy >0){ //1 Tick == 1 hour
 				recover()
 			}
-		}		
-		//if immune then do nothing
+			
+		}	
 	}
 	
 		 
