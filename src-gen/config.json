@@ -21,7 +21,7 @@
       "mapping": [
       	{
       		"parameter" : "Human_gain_by_age",
-      		"value" : 10
+      		"value" : 20
       	},
       	{
       		"parameter" : "Vulnerable_class_ratio",
