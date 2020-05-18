@@ -1,6 +1,6 @@
 {
 	"globals": {
-		"steps" : 240,
+		"steps" : 720,
 		"output": "csv",
 		"options": {
 			"delimiter": ";",
