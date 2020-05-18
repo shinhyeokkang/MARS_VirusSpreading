@@ -59,14 +59,22 @@ agent Human on City{
 	}
 	
 	tick {
+		var NearestHuman = nearest Human
+		if (NearestHuman !== nil) {
+			var NearestDistance = distance(NearestHuman)
+			if (NearestDistance <= 2) {		// only do the social distancing move function if there is someone nearby
+				Move()
+			} else {
+				RandomMove()		// otherwise just random move
+			}
+		}
 		
-		Move();
 		
 		if (Infected === true) {
-			var NearestHuman = nearest Human
-			if (NearestHuman !== nil) {
-				var NearestDistance = distance(NearestHuman)
-				if (NearestDistance < 2) {		// can only infect if nearest human is close enough
+			var NearestHuman2 = nearest Human
+			if (NearestHuman2 !== nil) {
+				var NearestDistance2 = distance(NearestHuman2)
+				if (NearestDistance2 <= 2) {		// can only infect if nearest human is close enough
 					var Neighbors = explore Human in 2		// explore in radius 2
 					each (var Neighbor in Neighbors) {		// for each Neighbor 
 						var NeighborDistance = distance(Neighbor)
@@ -129,8 +137,12 @@ agent Human on City{
 			}
 		}
 		else{
-			move me random(100) to #(random(city.DimensionX), random(city.DimensionY))
+			RandomMove()
 		}
+	}
+	
+	def RandomMove() {
+		move me random(100) to #(random(city.DimensionX), random(city.DimensionY))
 	}
 	
 	
