@@ -8,3 +8,6 @@ Simulation 2
 
 Simulation 3
 ![image info](analysis/covid19-nosd.jpg)
+
+Simulations 4
+![image info](analysis/covid19-3days.jpg)
