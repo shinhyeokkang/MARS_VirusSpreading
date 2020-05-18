@@ -12,6 +12,7 @@ agent Human on City{
 	observe var Immune : bool = false
 	observe var obedient : bool = false
 	observe var Ticks: integer //count for recover
+	observe var R0 : integer
 	
 	var nearHuman : [Human]
 	var TargetDistance : real = 10
@@ -24,6 +25,11 @@ agent Human on City{
 	external observe var Government_announce_date : integer 
 	external observe var Initial_infected_rate : integer
 	
+	external var Infection_rate1 : integer
+	external var Infection_rate2 : integer
+	external var Infection_rate3 : integer
+	external var Infection_rate4 : integer
+	
 	var Obey = random(100); 
 	
 	 
@@ -34,6 +40,8 @@ agent Human on City{
 	initialize{
 		//Spawn somewhere in the grid when the simulation starts
 		pos at #(random(city.DimensionX), random(city.DimensionY))
+		
+		R0 = 0
 		
 		var Class = random(100);
 		if(Class < Vulnerable_class_ratio) {
@@ -55,18 +63,18 @@ agent Human on City{
 		Move();
 		
 		if (Infected === true) {
-			var Neighbors = explore Human 	
-			var NearestDistance = distance(Neighbors[0])
-		
-			if (NearestDistance < 2) {
-				Neighbors = explore Human in 2
-				each (var Neighbor in Neighbors) {		// for each Neighbor 
-					var NeighborDistance = distance(Neighbor)
-					if (NeighborDistance < 2 and Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
-						 
-						 Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
-					}
+			var NearestHuman = nearest Human
+			if (NearestHuman !== nil) {
+				var NearestDistance = distance(NearestHuman)
+				if (NearestDistance < 2) {		// can only infect if nearest human is close enough
+					var Neighbors = explore Human in 2		// explore in radius 2
+					each (var Neighbor in Neighbors) {		// for each Neighbor 
+						var NeighborDistance = distance(Neighbor)
+						if (NeighborDistance < 2 and Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
+							Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
+						}
 					
+					}
 				}
 			}
 		}
@@ -140,25 +148,26 @@ agent Human on City{
 		 
 		// different infection rates based on Distance
 		if (Distance <= 0.5) {
-			return CalcInfected(Neighbor, RandomValue, 80); // for example, 80% to get infected if Distance <= 0.5
+			return CalcInfected(Neighbor, RandomValue, Infection_rate1); // Infection_rate derived from config.json
 		} 
 
 		if (Distance <= 1) {
-			return CalcInfected(Neighbor, RandomValue, 60);
+			return CalcInfected(Neighbor, RandomValue, Infection_rate2);
 		} 
 		
 		if (Distance <= 1.5) {
-			return CalcInfected(Neighbor, RandomValue, 40);
+			return CalcInfected(Neighbor, RandomValue, Infection_rate3);
 		} 
 
 		if (Distance <= 2) {
-			return CalcInfected(Neighbor, RandomValue, 20);
+			return CalcInfected(Neighbor, RandomValue, Infection_rate4);
 		} 
 	}
 	
 	def CalcInfected(Neighbor : Human, RandomValue : real, ComparedTo : real) : bool {
 			if (RandomValue < ComparedTo) {
 				Neighbor.SetInfected(true);
+				R0++
 				return true;
 			} else {
 				return false;
