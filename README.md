@@ -1,4 +1,9 @@
 # MARS_VirusSpreading
-Update the VirusSpreading.mars to src folder only
 
+Simulation 1
 ![image info](analysis/covid19.jpg)
+
+Simulation 2
+![image info](analysis/covid19-2.jpg)
+
+
