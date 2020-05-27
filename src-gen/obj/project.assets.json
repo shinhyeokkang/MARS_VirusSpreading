@@ -8627,23 +8627,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\강신혁\\.nuget\\packages\\": {},
+    "C:\\Users\\wnsal\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
+      "projectUniqueName": "C:\\Users\\wnsal\\Desktop\\java workplace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
       "projectName": "VirusSpreading",
-      "projectPath": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
-      "packagesPath": "C:\\Users\\강신혁\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\강신혁\\eclipse-workspace\\VirusSpreading\\src-gen\\obj\\",
+      "projectPath": "C:\\Users\\wnsal\\Desktop\\java workplace\\VirusSpreading\\src-gen\\VirusSpreading.csproj",
+      "packagesPath": "C:\\Users\\wnsal\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\wnsal\\Desktop\\java workplace\\VirusSpreading\\src-gen\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\강신혁\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\wnsal\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"

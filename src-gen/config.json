@@ -1,6 +1,6 @@
 {
 	"globals": {
-		"steps" : 720,
+		"steps" : 1080,
 		"output": "csv",
 		"options": {
 			"delimiter": ";",
@@ -21,7 +21,7 @@
       "mapping": [
       	{
       		"parameter" : "Human_gain_by_age",
-      		"value" : 20
+      		"value" : 60
       	},
       	{
       		"parameter" : "Vulnerable_class_ratio",
@@ -29,11 +29,11 @@
       	},
       	{
       		"parameter" : "Obey_ratio",
-      		"value" : 60
+      		"value" : 80
       	},
       	{
       		"parameter" : "Government_announce_date",
-      		"value" : 720
+      		"value" : 400
       	},
 		{
       		"parameter" : "Initial_infected_rate",
@@ -41,21 +41,13 @@
       	},
       	{
       		"parameter" : "Infection_rate1",
-      		"value" : 30
+      		"value" : 5
       	},
 		{
       		"parameter" : "Infection_rate2",
-      		"value" : 15
-      	},
-		{
-      		"parameter" : "Infection_rate3",
-      		"value" : 10
-      	},
-		{
-      		"parameter" : "Infection_rate4",
-      		"value" : 5
-      	},		
-      ]
+      		"value" : 1
+      	}
+        ]
 }
   ]
 }

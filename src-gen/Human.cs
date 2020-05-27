@@ -50,12 +50,20 @@ namespace VirusSpreading {
 				if(__Immune != value) __Immune = value;
 			}
 		}
-		private bool __obedient
+		private bool __Obedient
 			 = false;
-		public bool obedient { 
-			get { return __obedient; }
+		public bool Obedient { 
+			get { return __Obedient; }
 			set{
-				if(__obedient != value) __obedient = value;
+				if(__Obedient != value) __Obedient = value;
+			}
+		}
+		private bool __Vulnerable
+			 = false;
+		public bool Vulnerable { 
+			get { return __Vulnerable; }
+			set{
+				if(__Vulnerable != value) __Vulnerable = value;
 			}
 		}
 		private int __Ticks
@@ -66,6 +74,14 @@ namespace VirusSpreading {
 				if(__Ticks != value) __Ticks = value;
 			}
 		}
+		private int __LossTicks
+			 = default(int);
+		public int LossTicks { 
+			get { return __LossTicks; }
+			set{
+				if(__LossTicks != value) __LossTicks = value;
+			}
+		}
 		private int __R0
 			 = default(int);
 		public int R0 { 
@@ -74,36 +90,12 @@ namespace VirusSpreading {
 				if(__R0 != value) __R0 = value;
 			}
 		}
-		private VirusSpreading.Human[] __nearHuman
-			 = default(VirusSpreading.Human[]);
-		internal VirusSpreading.Human[] nearHuman { 
-			get { return __nearHuman; }
+		private bool __DeadTick
+			 = false;
+		public bool DeadTick { 
+			get { return __DeadTick; }
 			set{
-				if(__nearHuman != value) __nearHuman = value;
-			}
-		}
-		private double __TargetDistance
-			 = 10;
-		internal double TargetDistance { 
-			get { return __TargetDistance; }
-			set{
-				if(System.Math.Abs(__TargetDistance - value) > 0.0000001) __TargetDistance = value;
-			}
-		}
-		private double __TargetDistance2
-			 = 10;
-		internal double TargetDistance2 { 
-			get { return __TargetDistance2; }
-			set{
-				if(System.Math.Abs(__TargetDistance2 - value) > 0.0000001) __TargetDistance2 = value;
-			}
-		}
-		private double __TargetDistance3
-			 = 10;
-		internal double TargetDistance3 { 
-			get { return __TargetDistance3; }
-			set{
-				if(System.Math.Abs(__TargetDistance3 - value) > 0.0000001) __TargetDistance3 = value;
+				if(__DeadTick != value) __DeadTick = value;
 			}
 		}
 		private int __Human_gain_by_age
@@ -162,190 +154,28 @@ namespace VirusSpreading {
 				if(__Infection_rate2 != value) __Infection_rate2 = value;
 			}
 		}
-		private int __Infection_rate3
-			 = default(int);
-		internal int Infection_rate3 { 
-			get { return __Infection_rate3; }
-			set{
-				if(__Infection_rate3 != value) __Infection_rate3 = value;
-			}
-		}
-		private int __Infection_rate4
-			 = default(int);
-		internal int Infection_rate4 { 
-			get { return __Infection_rate4; }
-			set{
-				if(__Infection_rate4 != value) __Infection_rate4 = value;
-			}
-		}
-		private int __Obey
-			 = default(int);
-		internal int Obey { 
-			get { return __Obey; }
-			set{
-				if(__Obey != value) __Obey = value;
-			}
-		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public virtual void Move() 
-		{
-			{
-			nearHuman = new System.Func<VirusSpreading.Human[]>(() => {
-				
-				var _sourceMapped100_2716 = this.Position;
-				var _source100_2716 = _sourceMapped100_2716;
-				var _range100_2716 = -1;
-							
-				Func<VirusSpreading.Human, bool> _predicate100_2716 = null;
-				Func<VirusSpreading.Human, bool> _predicateMod100_2716 = new Func<VirusSpreading.Human, bool>(_it => 
-				{
-					if (_it?.ID == this.ID)
-					{
-						return false;
-					} else if (_predicate100_2716 != null)
-					{
-						return _predicate100_2716.Invoke(_it);
-					} else return true;
-				});
-				
-				return _City._HumanEnvironment.Explore(_source100_2716 , _range100_2716, -1, _predicate100_2716).ToArray();
-			}).Invoke();
-			if(!Equals(nearHuman[0], null)) {
-							{
-							TargetDistance = new Func<double>(() => {
-							var _target102_2783 = nearHuman[0];
-							if (_target102_2783 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target102_2783.Position.PositionArray);
-							}).Invoke()
-							;}
-					;} ;
-			if(!Equals(nearHuman[1], null)) {
-							{
-							TargetDistance2 = new Func<double>(() => {
-							var _target106_2866 = nearHuman[1];
-							if (_target106_2866 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target106_2866.Position.PositionArray);
-							}).Invoke()
-							;}
-					;} ;
-			if(!Equals(nearHuman[2], null)) {
-							{
-							TargetDistance3 = new Func<double>(() => {
-							var _target110_2949 = nearHuman[2];
-							if (_target110_2949 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target110_2949.Position.PositionArray);
-							}).Invoke()
-							;}
-					;} ;
-			if(Equals(obedient, true) && TargetDistance <= 2) {
-							{
-							Rule = "R3 - Social Distancing";
-							double nearx = nearHuman[0].GetPositionX();
-							double neary = nearHuman[0].GetPositionY();
-							if(TargetDistance2 > 2) {
-											{
-											new System.Func<Tuple<double,double>>(() => {
-												
-												var _speed120_3255 = 1
-											;
-												
-												var _entity120_3255 = this;
-												
-												Func<double[], bool> _predicate120_3255 = null;
-												
-												var _target120_3255 = new System.Tuple<double,double>(2 * this.Position.X - nearx,2 * this.Position.Y - neary);
-												_City._HumanEnvironment.MoveTo(_entity120_3255,
-													 _target120_3255.Item1, _target120_3255.Item2, 
-													_speed120_3255, 
-													_predicate120_3255);
-												
-												return new Tuple<double, double>(Position.X, Position.Y);
-											}).Invoke()
-											;}
-									;} else {
-											if(TargetDistance3 > 2) {
-															{
-															double nearx2 = nearHuman[1].GetPositionX();
-															double neary2 = nearHuman[1].GetPositionY();
-															double avoidx = Plus(nearx,nearx2);
-															double avoidy = Plus(neary,neary2);
-															double ax = Divide(avoidx);
-															double ay = Divide(avoidy);
-															new System.Func<Tuple<double,double>>(() => {
-																
-																var _speed132_3670 = 1
-															;
-																
-																var _entity132_3670 = this;
-																
-																Func<double[], bool> _predicate132_3670 = null;
-																
-																var _target132_3670 = new System.Tuple<double,double>(2 * this.Position.X - ax,2 * this.Position.Y - ay);
-																_City._HumanEnvironment.MoveTo(_entity132_3670,
-																	 _target132_3670.Item1, _target132_3670.Item2, 
-																	_speed132_3670, 
-																	_predicate132_3670);
-																
-																return new Tuple<double, double>(Position.X, Position.Y);
-															}).Invoke()
-															;}
-													;} else {
-															{
-															new System.Func<Tuple<double,double>>(() => {
-																
-																var _speed136_3738 = 2
-															;
-																
-																var _entity136_3738 = this;
-																
-																Func<double[], bool> _predicate136_3738 = null;
-																
-																var _target136_3738 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
-																),
-																_Random.Next(city.DimensionY()
-																)
-																);
-																_City._HumanEnvironment.MoveTo(_entity136_3738,
-																	 _target136_3738.Item1, _target136_3738.Item2, 
-																	_speed136_3738, 
-																	_predicate136_3738);
-																
-																return new Tuple<double, double>(Position.X, Position.Y);
-															}).Invoke()
-															;}
-														;}
-										;}
-							;}
-					;} else {
-							{
-							RandomMove()
-							;}
-						;}
-			;}
-			return;
-		}
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 		public virtual void RandomMove() 
 		{
 			{
 			new System.Func<Tuple<double,double>>(() => {
 				
-				var _speed145_3876 = _Random.Next(100)
+				var _speed89_2383 = _Random.Next(100)
 			;
 				
-				var _entity145_3876 = this;
+				var _entity89_2383 = this;
 				
-				Func<double[], bool> _predicate145_3876 = null;
+				Func<double[], bool> _predicate89_2383 = null;
 				
-				var _target145_3876 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
+				var _target89_2383 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
 				),
 				_Random.Next(city.DimensionY()
 				)
 				);
-				_City._HumanEnvironment.MoveTo(_entity145_3876,
-					 _target145_3876.Item1, _target145_3876.Item2, 
-					_speed145_3876, 
-					_predicate145_3876);
+				_City._HumanEnvironment.MoveTo(_entity89_2383,
+					 _target89_2383.Item1, _target89_2383.Item2, 
+					_speed89_2383, 
+					_predicate89_2383);
 				
 				return new Tuple<double, double>(Position.X, Position.Y);
 			}).Invoke()
@@ -353,46 +183,18 @@ namespace VirusSpreading {
 			return;
 		}
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public virtual double Divide(double a) 
-		{
-			{
-			double x = a / 2;
-			return x
-			;}
-			return default(double);;
-		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public virtual double Plus(double a, double b) 
-		{
-			{
-			double x = a + b;
-			return x
-			;}
-			return default(double);;
-		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 		public virtual bool Infect(VirusSpreading.Human Neighbor, double Distance) 
 		{
 			{
 			int RandomValue = _Random.Next(100);
-			if(Distance <= 0.5) {
+			if(Distance <= 1) {
 							{
 							return CalcInfected(Neighbor,RandomValue,Infection_rate1)
 							;}
 					;} ;
-			if(Distance <= 1) {
-							{
-							return CalcInfected(Neighbor,RandomValue,Infection_rate2)
-							;}
-					;} ;
-			if(Distance <= 1.5) {
-							{
-							return CalcInfected(Neighbor,RandomValue,Infection_rate3)
-							;}
-					;} ;
 			if(Distance <= 2) {
 							{
-							return CalcInfected(Neighbor,RandomValue,Infection_rate4)
+							return CalcInfected(Neighbor,RandomValue,Infection_rate2)
 							;}
 					;} 
 			;}
@@ -417,7 +219,7 @@ namespace VirusSpreading {
 			return default(bool);;
 		}
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public virtual void recover() 
+		public virtual void Recover() 
 		{
 			{
 			if(Infected) {
@@ -430,44 +232,51 @@ namespace VirusSpreading {
 			return;
 		}
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public virtual void loss() 
+		public virtual void Loss() 
 		{
 			{
 			if(Infected) {
 							{
-							Ticks++;
-							if(Equals(Ticks % 24, 0)) {
+							LossTicks++;
+							if(Equals(LossTicks % 24, 0)) {
 											{
-											if(Energy - _Random.Next(Energy)
-											 <= 2) {
+											Energy--;
+											if(Vulnerable) {
 															{
-															new System.Action(() => {
-																var _target203_5272 = this;
-																if (_target203_5272 != null) {
-																	_City._KillHuman(_target203_5272, _target203_5272._executionFrequency);
-																}
-															}).Invoke()
-															;}
-													;} ;
-											if(Energy <= 0) {
-															{
-															new System.Action(() => {
-																var _target206_5316 = this;
-																if (_target206_5316 != null) {
-																	_City._KillHuman(_target206_5316, _target206_5316._executionFrequency);
-																}
-															}).Invoke()
+															if(_Random.Next(100)
+															 < 20) {
+																			{
+																			Energy = Energy - _Random.Next(4)
+																			;}
+																	;} 
 															;}
 													;} else {
 															{
-															Energy--
+															if(_Random.Next(100)
+															 < 5) {
+																			{
+																			Energy = Energy - _Random.Next(2)
+																			;}
+																	;} 
 															;}
-														;}
+														;};
+											if(Energy < 1) {
+															{
+															DeadTick = true;
+															new System.Action(() => {
+																var _target139_3579 = this;
+																if (_target139_3579 != null) {
+																	_City._KillHuman(_target139_3579, _target139_3579._executionFrequency);
+																}
+															}).Invoke()
+															;}
+													;} 
 											;}
 									;} ;
-							if(Ticks / 24 >= 15 && Energy > 0) {
+							if(LossTicks / 24 >= 15 && Energy > 0 && _Random.Next(100)
+							 < 10) {
 											{
-											recover()
+											Recover()
 											;}
 									;} 
 							;}
@@ -503,38 +312,6 @@ namespace VirusSpreading {
 			
 			return;
 		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public void Killed() {
-			{
-			new System.Action(() => {
-				var _target219_5525 = this;
-				if (_target219_5525 != null) {
-					_City._KillHuman(_target219_5525, _target219_5525._executionFrequency);
-				}
-			}).Invoke()
-					;
-			}
-			
-			return;
-		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public double GetPositionX() {
-			{
-			return this.Position.X
-					;
-			}
-			
-			return default(double);;
-		}
-		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-		public double GetPositionY() {
-			{
-			return this.Position.Y
-					;
-			}
-			
-			return default(double);;
-		}
 		internal bool _isAlive;
 		internal int _executionFrequency;
 		
@@ -556,9 +333,7 @@ namespace VirusSpreading {
 		int Government_announce_date,
 		int Initial_infected_rate,
 		int Infection_rate1,
-		int Infection_rate2,
-		int Infection_rate3,
-		int Infection_rate4
+		int Infection_rate2
 	,	double xcor = 0, double ycor = 0, int freq = 1)
 		{
 			_City = _layer;
@@ -572,8 +347,6 @@ namespace VirusSpreading {
 			this.Initial_infected_rate = Initial_infected_rate;
 			this.Infection_rate1 = Infection_rate1;
 			this.Infection_rate2 = Infection_rate2;
-			this.Infection_rate3 = Infection_rate3;
-			this.Infection_rate4 = Infection_rate4;
 			_City._HumanEnvironment.Insert(this);
 			_register(_layer, this, freq);
 			_isAlive = true;
@@ -581,33 +354,36 @@ namespace VirusSpreading {
 			{
 			new System.Func<System.Tuple<double,double>>(() => {
 				
-				var _taget42_1182 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
+				var _taget35_1049 = new System.Tuple<int,int>(_Random.Next(city.DimensionX()
 				),
 				_Random.Next(city.DimensionY()
 				)
 				);
 				
-				var _object42_1182 = this;
+				var _object35_1049 = this;
 				
-				_City._HumanEnvironment.PosAt(_object42_1182, 
-					_taget42_1182.Item1, _taget42_1182.Item2
+				_City._HumanEnvironment.PosAt(_object35_1049, 
+					_taget35_1049.Item1, _taget35_1049.Item2
 				);
 				return new Tuple<double, double>(Position.X, Position.Y);
 			}).Invoke();
 			R0 = 0;
+			Ticks = 0;
+			LossTicks = 0;
 			int Class = _Random.Next(100);
 			if(Class < Vulnerable_class_ratio) {
 							{
-							Energy = _Random.Next(Human_gain_by_age)
+							Energy = _Random.Next(Human_gain_by_age);
+							Vulnerable = true
 							;}
 					;} else {
 							{
 							Energy = _Random.Next(Human_gain_by_age)
-							 + 15
+							 + 40
 							;}
 						;};
 			int infect = _Random.Next(100);
-			if(infect <= Initial_infected_rate) {
+			if(infect < Initial_infected_rate) {
 							{
 							Infected = true
 							;}
@@ -619,106 +395,76 @@ namespace VirusSpreading {
 		{
 			{ if (!_isAlive) return; }
 			{
-			VirusSpreading.Human NearestHuman = new Func<VirusSpreading.Human>(() => {
-				Func<VirusSpreading.Human, bool> _predicate62_1572 = null;
-				Func<VirusSpreading.Human, bool> _predicateMod62_1572 = new Func<VirusSpreading.Human, bool>(_it => 
-				{
-					if (_it?.ID == this.ID)
-					{
-						return false;
-					} else if (_predicate62_1572 != null)
-					{
-						return _predicate62_1572.Invoke(_it);
-					} else return true;
-				});
-				
-				const int _range62_1572 = -1;
-				var _source62_1572 = this.Position;
-				
-				return _City._HumanEnvironment.Explore(_source62_1572, _range62_1572, 1, _predicateMod62_1572)?.FirstOrDefault();
-			}).Invoke();
-			if(!Equals(NearestHuman, null)) {
+			Ticks++;
+			if(Equals(Obedient, false)) {
 							{
-							double NearestDistance = new Func<double>(() => {
-							var _target64_1643 = (NearestHuman);
-							if (_target64_1643 == null) return 0.0;
-							return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target64_1643.Position.PositionArray);
-							}).Invoke();
-							if(NearestDistance <= 2) {
-											{
-											Move()
-											;}
-									;} else {
-											{
-											RandomMove()
-											;}
-										;}
+							RandomMove()
 							;}
 					;} ;
 			if(Equals(Infected, true)) {
 							{
-							VirusSpreading.Human NearestHuman2 = new Func<VirusSpreading.Human>(() => {
-								Func<VirusSpreading.Human, bool> _predicate74_1918 = null;
-								Func<VirusSpreading.Human, bool> _predicateMod74_1918 = new Func<VirusSpreading.Human, bool>(_it => 
+							VirusSpreading.Human NearestHuman = new Func<VirusSpreading.Human>(() => {
+								Func<VirusSpreading.Human, bool> _predicate62_1572 = null;
+								Func<VirusSpreading.Human, bool> _predicateMod62_1572 = new Func<VirusSpreading.Human, bool>(_it => 
 								{
 									if (_it?.ID == this.ID)
 									{
 										return false;
-									} else if (_predicate74_1918 != null)
+									} else if (_predicate62_1572 != null)
 									{
-										return _predicate74_1918.Invoke(_it);
+										return _predicate62_1572.Invoke(_it);
 									} else return true;
 								});
 								
-								const int _range74_1918 = -1;
-								var _source74_1918 = this.Position;
+								const int _range62_1572 = -1;
+								var _source62_1572 = this.Position;
 								
-								return _City._HumanEnvironment.Explore(_source74_1918, _range74_1918, 1, _predicateMod74_1918)?.FirstOrDefault();
+								return _City._HumanEnvironment.Explore(_source62_1572, _range62_1572, 1, _predicateMod62_1572)?.FirstOrDefault();
 							}).Invoke();
-							if(!Equals(NearestHuman2, null)) {
+							if(!Equals(NearestHuman, null)) {
 											{
-											double NearestDistance2 = new Func<double>(() => {
-											var _target76_1993 = (NearestHuman2);
-											if (_target76_1993 == null) return 0.0;
-											return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target76_1993.Position.PositionArray);
+											double NearestDistance = new Func<double>(() => {
+											var _target64_1645 = (NearestHuman);
+											if (_target64_1645 == null) return 0.0;
+											return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target64_1645.Position.PositionArray);
 											}).Invoke();
-											if(NearestDistance2 <= 2) {
+											if(NearestDistance <= 2) {
 															{
 															VirusSpreading.Human[] Neighbors = new System.Func<VirusSpreading.Human[]>(() => {
 																
-																var _sourceMapped78_2126 = this.Position;
-																var _source78_2126 = _sourceMapped78_2126;
-																var _range78_2126 = 2;
+																var _sourceMapped66_1776 = this.Position;
+																var _source66_1776 = _sourceMapped66_1776;
+																var _range66_1776 = 2;
 																			
-																Func<VirusSpreading.Human, bool> _predicate78_2126 = null;
-																Func<VirusSpreading.Human, bool> _predicateMod78_2126 = new Func<VirusSpreading.Human, bool>(_it => 
+																Func<VirusSpreading.Human, bool> _predicate66_1776 = null;
+																Func<VirusSpreading.Human, bool> _predicateMod66_1776 = new Func<VirusSpreading.Human, bool>(_it => 
 																{
 																	if (_it?.ID == this.ID)
 																	{
 																		return false;
-																	} else if (_predicate78_2126 != null)
+																	} else if (_predicate66_1776 != null)
 																	{
-																		return _predicate78_2126.Invoke(_it);
+																		return _predicate66_1776.Invoke(_it);
 																	} else return true;
 																});
 																
-																return _City._HumanEnvironment.Explore(_source78_2126 , _range78_2126, -1, _predicate78_2126).ToArray();
+																return _City._HumanEnvironment.Explore(_source66_1776 , _range66_1776, -1, _predicate66_1776).ToArray();
 															}).Invoke();
 															foreach ( var Neighbor in Neighbors ) {
 																		{
 																		double NeighborDistance = new Func<double>(() => {
-																		var _target80_2263 = (Neighbor);
-																		if (_target80_2263 == null) return 0.0;
-																		return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target80_2263.Position.PositionArray);
+																		var _target68_1913 = (Neighbor);
+																		if (_target68_1913 == null) return 0.0;
+																		return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target68_1913.Position.PositionArray);
 																		}).Invoke();
-																		if(NeighborDistance < 2 && Equals(Neighbor.IsInfected()
+																		if(NeighborDistance <= 2 && Equals(Neighbor.IsInfected()
 																		, false) && Equals(Neighbor.IsImmune()
 																		, false)) {
 																						{
 																						Infect(Neighbor,new Func<double>(() => {
-																						var _target82_2459 = (Neighbor);
-																						if (_target82_2459 == null) return 0.0;
-																						return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target82_2459.Position.PositionArray);
+																						var _target70_2110 = (Neighbor);
+																						if (_target70_2110 == null) return 0.0;
+																						return Mars.Mathematics.Distance.Calculate(Mars.Mathematics.SpaceDistanceMetric.Chebyshev, this.Position.PositionArray, _target70_2110.Position.PositionArray);
 																						}).Invoke())
 																						;}
 																				;} 
@@ -730,12 +476,13 @@ namespace VirusSpreading {
 									;} 
 							;}
 					;} ;
-			loss();
-			if(Ticks / 24 >= Government_announce_date) {
+			Loss();
+			if(Equals(Ticks, Government_announce_date)) {
 							{
+							int Obey = _Random.Next(100);
 							if(Obey < Obey_ratio) {
 											{
-											obedient = true
+											Obedient = true
 											;}
 									;} 
 							;}

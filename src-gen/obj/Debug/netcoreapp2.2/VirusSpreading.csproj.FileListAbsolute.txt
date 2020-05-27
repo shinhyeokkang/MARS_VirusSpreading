@@ -1,11 +1,11 @@
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.deps.json
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.runtimeconfig.json
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.runtimeconfig.dev.json
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.dll
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.pdb
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.csprojAssemblyReference.cache
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.csproj.CoreCompileInputs.cache
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.AssemblyInfoInputs.cache
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.AssemblyInfo.cs
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.dll
-C:\Users\강신혁\eclipse-workspace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.pdb
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.deps.json
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.runtimeconfig.json
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.runtimeconfig.dev.json
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.dll
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\bin\Debug\netcoreapp2.2\VirusSpreading.pdb
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.csprojAssemblyReference.cache
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.csproj.CoreCompileInputs.cache
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.AssemblyInfoInputs.cache
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.AssemblyInfo.cs
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.dll
+C:\Users\wnsal\Desktop\java workplace\VirusSpreading\src-gen\obj\Debug\netcoreapp2.2\VirusSpreading.pdb

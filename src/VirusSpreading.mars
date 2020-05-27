@@ -10,14 +10,12 @@ agent Human on City{
 	observe var Energy : integer //when energy goes to 0, human die.
 	observe var Infected : bool = false
 	observe var Immune : bool = false
-	observe var obedient : bool = false
-	observe var Ticks: integer //count for recover
+	observe var Obedient : bool = false
+	observe var Vulnerable : bool = false
+	observe var Ticks : integer
+	observe var LossTicks : integer //count for recover
 	observe var R0 : integer
-	
-	var nearHuman : [Human]
-	var TargetDistance : real = 10
-	var TargetDistance2 : real = 10
-	var TargetDistance3 : real = 10
+	observe var DeadTick : bool = false
 	
 	external observe var Human_gain_by_age : integer
 	external observe var Vulnerable_class_ratio : integer
@@ -27,12 +25,7 @@ agent Human on City{
 	
 	external var Infection_rate1 : integer
 	external var Infection_rate2 : integer
-	external var Infection_rate3 : integer
-	external var Infection_rate4 : integer
 	
-	var Obey = random(100); 
-	
-	 
 	passive IsInfected() => return Infected 
 	passive IsImmune() => return Immune
 	passive SetInfected(Bool : bool) => Infected = Bool
@@ -42,43 +35,38 @@ agent Human on City{
 		pos at #(random(city.DimensionX), random(city.DimensionY))
 		
 		R0 = 0
+		Ticks = 0
+		LossTicks = 0
 		
-		var Class = random(100);
+		var Class = random(100)
 		if(Class < Vulnerable_class_ratio) {
 			Energy = random(Human_gain_by_age);
+			Vulnerable = true
 		}
 		else {
-			Energy = random(Human_gain_by_age) + 15;
+			Energy = random(Human_gain_by_age) + 40
 		}
 		
-		var infect = random(100);
-		if(infect <= Initial_infected_rate) {
+		var infect = random(100)
+		if(infect < Initial_infected_rate) {
 			Infected = true
 		}
-	
 	}
 	
 	tick {
-		var NearestHuman = nearest Human
-		if (NearestHuman !== nil) {
-			var NearestDistance = distance(NearestHuman)
-			if (NearestDistance <= 2) {		// only do the social distancing move function if there is someone nearby
-				Move()
-			} else {
-				RandomMove()		// otherwise just random move
-			}
-		}
+		Ticks++
 		
+		if(Obedient === false){RandomMove()}
 		
 		if (Infected === true) {
-			var NearestHuman2 = nearest Human
-			if (NearestHuman2 !== nil) {
-				var NearestDistance2 = distance(NearestHuman2)
-				if (NearestDistance2 <= 2) {		// can only infect if nearest human is close enough
+			var NearestHuman = nearest Human
+			if (NearestHuman !== nil) {
+				var NearestDistance = distance(NearestHuman)
+				if (NearestDistance <= 2) {		// can only infect if nearest human is close enough
 					var Neighbors = explore Human in 2		// explore in radius 2
 					each (var Neighbor in Neighbors) {		// for each Neighbor 
 						var NeighborDistance = distance(Neighbor)
-						if (NeighborDistance < 2 and Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
+						if (NeighborDistance <= 2 and Neighbor.IsInfected() === false and Neighbor.IsImmune() === false) {		// if Neighbor not already infected or immune
 							Infect(Neighbor, distance(Neighbor))		// try to infect Neighbor
 						}
 					
@@ -87,141 +75,74 @@ agent Human on City{
 			}
 		}
 		
-		loss();
+		Loss()
 		
-		if ( Ticks/24 >= Government_announce_date ) {
+		if ( Ticks === Government_announce_date ) {
+			var Obey = random(100)
 			if(Obey < Obey_ratio) {
-				obedient = true;
+				Obedient = true
 			}
 		}
 	}
-	
-	def Move(){
-	    nearHuman = explore Human
-	    if(nearHuman[0] !== nil){
-			TargetDistance = distance nearHuman[0]
-			
-		}
-		if(nearHuman[1] !== nil){
-			TargetDistance2 = distance nearHuman[1]
-			
-		}
-		if(nearHuman[2] !== nil){
-			TargetDistance3 = distance nearHuman[2]
-			
-		}
 		
-		if(obedient === true and TargetDistance <= 2 ){
-			Rule = "R3 - Social Distancing"
-			//nearHuman = explore Human in 2;
-			var nearx = nearHuman[0].GetPositionX()//runaway from the human
-			var neary = nearHuman[0].GetPositionY()
-			if (TargetDistance2>2){
-				move me 1 to #(2*xcor-nearx,2*ycor-neary)	
-				}
-				else if (TargetDistance3>2){
-				  var nearx2 = nearHuman[1].GetPositionX()//runaway from the human
-				  var neary2 = nearHuman[1].GetPositionY()
-				  
-				  var avoidx = Plus(nearx,nearx2) // get middle point of two near human
-				  var avoidy = Plus(neary,neary2)
-				  
-				  var ax = Divide(avoidx);
-				  var ay = Divide(avoidy);
-				  
-				  move me 1 to #(2*xcor-ax,2*ycor-ay)
-				  }
-				  
-			else{
-				move me 2 to #(random(city.DimensionX), random(city.DimensionY))
-			}
-		}
-		else{
-			RandomMove()
-		}
-	}
-	
 	def RandomMove() {
 		move me random(100) to #(random(city.DimensionX), random(city.DimensionY))
 	}
-	
-	
-	def Divide(a : real) : real {
-		var x = a/2
-		return x;
-	}
-	def Plus(a : real, b : real) : real {
-		var x = a + b
-		return x;
-	}
-	
+		
 	def Infect(Neighbor : Human, Distance : real) : bool {
-		var RandomValue = random(100);	// get a random value 0-99
+		var RandomValue = random(100)	// get a random value 0-99
 		 
 		// different infection rates based on Distance
-		if (Distance <= 0.5) {
-			return CalcInfected(Neighbor, RandomValue, Infection_rate1); // Infection_rate derived from config.json
-		} 
-
 		if (Distance <= 1) {
-			return CalcInfected(Neighbor, RandomValue, Infection_rate2);
-		} 
-		
-		if (Distance <= 1.5) {
-			return CalcInfected(Neighbor, RandomValue, Infection_rate3);
+			return CalcInfected(Neighbor, RandomValue, Infection_rate1) // Infection_rate derived from config.json
 		} 
 
 		if (Distance <= 2) {
-			return CalcInfected(Neighbor, RandomValue, Infection_rate4);
+			return CalcInfected(Neighbor, RandomValue, Infection_rate2)
 		} 
 	}
 	
 	def CalcInfected(Neighbor : Human, RandomValue : real, ComparedTo : real) : bool {
 			if (RandomValue < ComparedTo) {
-				Neighbor.SetInfected(true);
+				Neighbor.SetInfected(true)
 				R0++
-				return true;
+				return true
 			} else {
-				return false;
+				return false
 			}		
 	}
-	
 
-	def recover(){ //antibodies
+	def Recover(){ //antibodies
 		if (Infected){
 			Infected = false //set not infected
 			Immune = true    //set immune
-		}		
-		
+		}			
 	}
 	
-	def loss(){		//TODO: add prob for recover() => affects the results
+	def Loss(){		
 		if(Infected){
-			Ticks++
-			if(Ticks % 24 === 0){
-				if(Energy - random(Energy)<=2){ //15% death rate
+			LossTicks++
+			if(LossTicks % 24 === 0){
+				Energy--
+				if (Vulnerable) {
+					if (random(100) < 20) {
+						Energy = Energy - random(4)
+					}
+				} else {
+					if (random(100) < 5) {
+						Energy = Energy - random(2)
+					}
+				}
+				
+				if (Energy < 1) {
+					DeadTick = true
 					kill me
 				}
-				if(Energy <= 0 ){
-					kill me   //die when energy <= 0
-				}else{
-					Energy--//loss energy
-				}
+
 			}
-			if(Ticks/24 >= 15 and Energy >0){ //1 Tick == 1 hour
-				recover()
+			if(LossTicks/24 >= 15 and Energy >0 and random(100)<10){ //1 Tick == 1 hour
+				Recover()
 			}
-			
 		}	
 	}
-	
-		 
-	passive Killed() => kill me
-	
-	passive GetPositionX() => return xcor
-	passive GetPositionY() => return ycor
-	
-
-
 }
-
