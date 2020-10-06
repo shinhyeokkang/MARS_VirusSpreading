@@ -1,5 +1,10 @@
 # MARS_VirusSpreading
 
+For more detailed information about MARS project, visit here:
+mars-explorers.slack.com
+
+
+
 Simulation 1
 ![image info](analysis/covid19.jpg)
 
